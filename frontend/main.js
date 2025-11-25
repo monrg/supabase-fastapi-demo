@@ -108,7 +108,8 @@
       setStatus("跳转登录中...");
       const { error } = await supabase.auth.signInWithOAuth({
         provider,
-        options: { redirectTo: `${window.location.origin}/callback.html` }
+        // 使用当前页面作为基准，兼容 GitHub Pages 子路径
+        options: { redirectTo: new URL("./callback.html", window.location.href).href }
       });
       if (error) {
         console.error(error);
